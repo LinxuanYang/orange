@@ -1,3 +1,3 @@
 # orange
 
-This C xxx
+This my leetcode practice file.
