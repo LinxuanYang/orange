@@ -1,0 +1,140 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Aug 13 15:08:41 2018
+
+@author: yanglinxuan
+"""
+
+#807. Max Increase to Keep City Skyline
+
+from random import randint
+
+
+
+#create a random skyline map
+'''
+row=4
+col=3
+a=[0]*row
+for i in range(row):
+    a[i]=[randint(0,50)]
+    print(a)
+    for j in range(col-1):
+        a[i]+=[randint(0,50)]
+        
+print(a)
+'''
+
+'''
+###silly naive vapid version
+
+a=[[3,0,8,4],[2,4,5,7],[9,2,6,3],[0,3,1,0]]
+#Get the highest building row by row
+def findskyline_row(a):
+    indexlist=[0]*4 #4 is the number of row
+    skyline_list=[]
+    for i in range(4):
+        skyline_height=max(a[i])
+#keep the index of the max 
+        colindex=a[i].index(skyline_height)
+        indexlist[i]=[i,colindex]
+        skyline_list+=[skyline_height]
+    
+
+    return(indexlist,skyline_list)
+
+#col by col
+def findskyline_col(a):
+    indexlist=[0]*4 #4 is the number of col
+    skyline_list_col=[]
+    for i in range(4):
+        test=[]
+        for j in range(4):
+            test+=[a[j][i]]
+        
+        skyline_height_col=max(test)
+        #gives the index of row
+        rowindex=test.index(skyline_height_col)
+        indexlist[i]=[rowindex,i]
+        skyline_list_col+=[skyline_height_col]
+  
+
+    return(indexlist,skyline_list_col)
+    
+row_h=findskyline_row(a)[1]
+col_h=findskyline_col(a)[1]
+
+indexrow=findskyline_row(a)[0]
+indexcol=findskyline_col(a)[0]
+
+print(row_h,col_h,indexrow,indexcol)
+
+allindex=indexrow+indexcol
+print(allindex)
+
+def maxadd(a,allindex):
+    test1=[]
+    test2=[]
+    sum=0
+    for i in range(4):
+        for j in range(4):
+            if [i,j] not in allindex:
+                test1=[]
+                test2=[]
+                print('so we get',[i,j],'is not the skyline')
+                #(i=0,j=2)
+                print('test i and j',i,j)
+                for k in allindex:
+                    
+                    print('now we test',k,'k 0 is',k[0],'k 1 is',k[1])
+                    if k[0]==i:
+                        print('yes,k[0] is equal to',i)
+                        b=k[0]
+                        c=k[1]
+                        print('we find this',a[b][c],'is on the same row')
+                        test1+=[a[b][c]]
+                        print('so we have list',test1)
+                        print('\n')
+                   
+                    if k[1]==j:
+                        b=k[0]
+                        c=k[1]
+                        print('we find this',a[b][c],'is on the same col')
+                        test2+=[a[b][c]]
+                      
+                leastnum=min(max(test1),max(test2))
+                print(leastnum)
+                sum+=leastnum-a[i][j]
+                a[i][j]=leastnum
+    return(sum)
+
+print(maxadd(a,allindex))
+
+'''
+
+# a better one
+a=[[3,0,8,4],[2,4,5,7],[9,2,6,3],[0,3,1,0]]
+
+def maxincresekeepingskyline(a):
+    
+    top=list(map(max,a))
+    left=list(map(max,zip(*a)))
+
+    print(top,left)
+
+    
+    sum=0
+    for i in range(len(a)):
+        for j in range(len(a[i])):
+            sum+=min(top[i],left[j])-a[i][j]
+            a[i][j]=min(top[i],left[j])
+   
+        
+    return sum
+
+
+print(maxincresekeepingskyline(a))
+
+        
+        
