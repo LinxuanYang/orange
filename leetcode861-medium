@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Aug 16 14:42:37 2018
+
+@author: yanglinxuan
+"""
+
+'''
+861. Score After Flipping Matrix
+We have a two dimensional matrix A where each value is 0 or 1.
+
+A move consists of choosing any row or column, and toggling each value 
+in that row or column: changing all 0s to 1s, and all 1s to 0s.
+
+After making any number of moves, every row of this matrix is interpreted 
+as a binary number, and the score of the matrix is the sum of these numbers.
+
+Return the highest possible score.
+'''
+
+def matrixScore(A):
+    """
+    :type A: list[list[int]]
+    :rtype: int
+    """   
+    rowmethod(A)
+    colmethod(A)
+    ll=[]
+    for i in range(len(A)):
+        l=''
+        for j in range(len(A[0])):
+            l+=str(A[i][j])
+        ll.append(l)
+    sum=0
+    for i in range(len(ll)):
+        sum+=int(ll[i],2)
+    return sum
+
+
+def rowmethod(A):
+    for i in A:
+        if i[0]==0:
+            for j in range (len(i)):
+                i[j]=1-i[j]
+    return A
+
+
+def colmethod(A):
+    ll=[]
+    for i in range (len(A[0])):
+        l=[]
+        for j in range (len(A)):
+            l.append(A[j][i])
+        ll.append(l)
+        if l.count(1)<l.count(0):
+            for j in range (len(A)):
+                A[j][i]=1-A[j][i]
+    return A
+            
+
+
+A=[[0,0,1,1],[1,0,1,0],[1,1,0,0]]
+            
+print(matrixScore(A))    
+
+
+            
+            
+            
+            
+            
+            
