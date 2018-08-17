@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Aug 17 13:15:20 2018
+
+@author: yanglinxuan
+"""
+
+#814. Binary Tree Pruning
+'''
+We are given the head node root of a binary tree, 
+where additionally every node's value is either a 0 or a 1.
+
+Return the same tree where every subtree (of the given tree) 
+not containing a 1 has been removed.
+
+(Recall that the subtree of a node X is X, plus every node that is 
+a descendant of X.)
+'''
+
+class TreeNode():
+    def __init__(self,x):
+        self.val=x
+        self.left=None
+        self.right=None
+
+
+def pruneTree(root):
+    """
+    :type root:TreeNode
+    :rtype:TreeNode
+    
+    """
+    def isleaf(node):
+        if (node.left == null & node.right == null):
+            return True
+    def checkleaf(node):
+        if isleaf(node):
+            if node.value==0:
+                node=null
+                checkleaf(root)
+        else:
+            if node.left!=null:
+                checkleaf(node.left)
+            if node.right!=null:
+                checkleaf(node.right)
+        
+                
+     checkleaf(root)      
+            
+
+
+    
