@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Aug 17 17:15:34 2018
+
+@author: yanglinxuan
+"""
+
+# 797 All Paths From Source to Target 
+
+def allpathscourcetarget(graph):
+    '''
+    :type graph:list[list[int]]
+    :rtype: list[list[int]]
+    '''
+    
+    result=[]
+    dfs(graph,result,0,[0])
+    print(result)
+    return result
+
+def dfs(graph,result,position,path):
+    print('position=',position)
+    print('path=',path)
+    if position==len(graph)-1:
+        print('yes,position==len(Graph)-1') 
+        result.append(path)
+        print('result.append path=',result)
+        print('path',path)
+        return 
+    else:
+        print('for n in graph[position],graph[position]=',graph[position])
+        for n in graph[position]:
+            print('n=',n)
+            print('path=',path)
+            print('now we do dfs(graph,',result,',',n,',',path+[n],')')
+            dfs(graph,result,n,path+[n])
+
+
+
+allpathscourcetarget([[1,2], [3], [3], []])
