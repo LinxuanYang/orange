@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Aug 20 14:56:49 2018
+
+@author: yanglinxuan
+"""
+
+#leetcode885-medium
+"""
+On a 2 dimensional grid with R rows and C columns, 
+we start at (r0, c0) facing east.
+
+Here, the north-west corner of the grid is at the first row and column, 
+and the south-east corner of the grid is at the last row and column.
+
+Now, we walk in a clockwise spiral shape to visit every position in this grid. 
+
+Whenever we would move outside the boundary of the grid, 
+we continue our walk outside the grid 
+(but may return to the grid boundary later.) 
+
+Eventually, we reach all R * C spaces of the grid.
+
+Return a list of coordinates representing the positions of the grid 
+in the order they were visited.
+"""
+
+def spiralMatrixIII(R,C,r0,c0):
+    """
+    :type R: int
+    :type C: int
+    :type r0: int
+    :type c0: int
+    :rtype: list[list[int]]
+    """
+    #define initials 
+    turns=0
+    direction=0
+    dx=[0,1,0,-1]
+    dy=[1,0,-1,0]
+    res=[[r0,c0]]
+    x=r0
+    y=c0
+    while len(res)<R*C:
+        step=turns//2+1
+        for i in range(step):
+            x+=dx[direction]
+            y+=dy[direction]
+            if 0<=x<=R-1 and 0<=y<=C-1:
+                res.append([x,y])
+        turns+=1
+        direction=(direction+1)%4
+    return res 
+
+print(spiralMatrixIII(5,6,1,4))
+
+
