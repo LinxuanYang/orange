@@ -1,0 +1,69 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Aug 20 17:39:31 2018
+
+@author: yanglinxuan
+"""
+
+#leetcode 763 partition lavels
+'''
+A string S of lowercase letters is given. 
+We want to partition this string into as many parts as possible 
+so that each letter appears in at most one part, 
+and return a list of integers representing the size of these parts.
+'''
+def partitionLabels(S):
+    """
+    :type S: str
+    :rtype: List[int]
+    """
+    res=[]
+    
+    #Get a dictionary recording letter with its appearing indexes as the form of list
+    def createDic(S):
+        dic={}
+        for i in range(len(S)):
+            if S[i] in dic.keys():
+                dic[S[i]].append(i)
+            else:
+                dic[S[i]]=[]
+                dic[S[i]].append(i)
+        return dic
+    
+    dic=createDic(S)
+   
+    def getEndIndex(start,dic):
+        pattern=[]
+        pattern.append(S[start])
+        end=dic[S[start]][-1]
+        for item in dic:
+            for i in dic[item]:
+                if start<i<end and item not in pattern:
+                    pattern.append(item)
+                    if max(dic[item])>end:
+                        end=max(dic[item])
+                    break
+        res.append(end+1)
+        return end
+    
+   
+    end=-1
+    while end !=len(S)-1:
+        end=getEndIndex(end+1,dic)
+        
+    #Get numbers of each part
+    if len(res)>=2:
+        for i in range(len(res)-1):
+            res[len(res)-1-i]=res[len(res)-1-i]-res[len(res)-2-i]
+    return res
+
+S = "ababcbacadefegdehijhklij"
+
+print(partitionLabels(S))
+
+
+
+    
+
+        
